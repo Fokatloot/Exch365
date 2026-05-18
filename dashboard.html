@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>EXCH365 Premium Plans</title>
+<title>EXCH365 Wallet</title>
 
 <style>
 
@@ -18,36 +18,43 @@ color:white;
 h1{
 text-align:center;
 margin-bottom:25px;
-font-size:35px;
 }
 
-.plan-box{
-background:#1e293b;
+.wallet{
+background:linear-gradient(135deg,#2563eb,#1e40af);
+padding:25px;
 border-radius:20px;
-overflow:hidden;
 margin-bottom:25px;
 box-shadow:0 0 15px rgba(0,0,0,0.4);
 }
 
-.plan-box img{
-width:100%;
-height:220px;
-object-fit:cover;
-}
-
-.content{
-padding:20px;
-}
-
-.plan-box h2{
+.wallet h2{
 margin:0;
-color:#38bdf8;
+font-size:22px;
 }
 
-.price{
-font-size:30px;
-margin:10px 0;
+.balance{
+font-size:40px;
+margin-top:10px;
 font-weight:bold;
+}
+
+.plan-box{
+background:#1e293b;
+padding:20px;
+border-radius:20px;
+margin-bottom:20px;
+box-shadow:0 0 10px rgba(0,0,0,0.3);
+}
+
+input{
+width:100%;
+padding:12px;
+border:none;
+border-radius:10px;
+margin-top:10px;
+font-size:16px;
+outline:none;
 }
 
 button{
@@ -59,31 +66,17 @@ background:#2563eb;
 color:white;
 font-size:18px;
 cursor:pointer;
-margin-top:10px;
+margin-top:12px;
 }
 
 button:hover{
 background:#1d4ed8;
 }
 
-.qr-box{
-background:white;
-padding:15px;
-border-radius:20px;
-margin-top:15px;
-text-align:center;
-}
-
-.qr-box img{
-width:100%;
-border-radius:15px;
-}
-
-.upi{
-color:black;
-font-weight:bold;
+.note{
 margin-top:10px;
-font-size:18px;
+font-size:14px;
+color:#cbd5e1;
 }
 
 </style>
@@ -91,78 +84,128 @@ font-size:18px;
 
 <body>
 
-<h1>EXCH365 Premium Plans</h1>
+<h1>EXCH365 Wallet</h1>
 
-<div id="plans"></div>
+<div class="wallet">
 
-<script>
+<h2>Total Wallet Balance</h2>
 
-let images = [
+<div class="balance" id="balance">
+₹0
+</div>
 
-"https://images.unsplash.com/photo-1520607162513-77705c0f0d4a",
-
-"https://images.unsplash.com/photo-1518546305927-5a555bb7020d",
-
-"https://images.unsplash.com/photo-1506744038136-46273834b3fb",
-
-"https://images.unsplash.com/photo-1494526585095-c41746248156",
-
-"https://images.unsplash.com/photo-1500530855697-b586d89ba3ee"
-
-];
-
-let plansDiv = document.getElementById("plans");
-
-for(let i = 1; i <= 20; i++){
-
-let amount = i * 500;
-
-let profit = i * 50;
-
-let randomImage = images[i % images.length];
-
-plansDiv.innerHTML += `
+</div>
 
 <div class="plan-box">
 
-<img src="${randomImage}" alt="plan image">
+<h2>Add Balance</h2>
 
-<div class="content">
+<input type="number" id="amount" placeholder="Enter Amount">
 
-<h2>Plan ${i}</h2>
-
-<div class="price">₹${amount}</div>
-
-<p>Daily Profit ₹${profit}</p>
-
-<button onclick="buyPlan(${amount})">
-Buy Now
+<button onclick="addMoney()">
+Add Money
 </button>
 
-<div class="qr-box">
+</div>
 
-<img src="scanner.jpg" alt="QR Code">
+<div class="plan-box">
 
-<div class="upi">
-UPI ID: 7489731836@mbk
+<h2>Withdraw Money</h2>
+
+<input type="number" id="withdrawAmount" placeholder="Enter Withdraw Amount">
+
+<button onclick="withdrawMoney()">
+Withdraw
+</button>
+
+<div class="note">
+Minimum Withdrawal ₹210 <br>
+3% Charge on Every Withdrawal
 </div>
 
 </div>
 
-</div>
+<script>
 
-</div>
+let balance = localStorage.getItem("wallet");
 
-`;
+if(balance == null){
+balance = 0;
+}else{
+balance = parseFloat(balance);
+}
+
+document.getElementById("balance").innerText =
+"₹" + balance.toFixed(2);
+
+function addMoney(){
+
+let amount =
+document.getElementById("amount").value;
+
+if(amount == ""){
+alert("Enter Amount");
+return;
+}
+
+amount = parseFloat(amount);
+
+balance = balance + amount;
+
+localStorage.setItem("wallet", balance);
+
+document.getElementById("balance").innerText =
+"₹" + balance.toFixed(2);
+
+alert("Money Added Successfully");
 
 }
 
-function buyPlan(amount){
+function withdrawMoney(){
 
-let upi =
-`upi://pay?pa=7489731836@mbk&pn=EXCH365&am=${amount}&cu=INR`;
+let amount =
+document.getElementById("withdrawAmount").value;
 
-window.location.href = upi;
+if(amount == ""){
+alert("Enter Withdraw Amount");
+return;
+}
+
+amount = parseFloat(amount);
+
+if(amount < 210){
+
+alert("Minimum Withdrawal ₹210");
+
+return;
+
+}
+
+let charge = (amount * 3) / 100;
+
+let totalDeduct = amount + charge;
+
+if(totalDeduct > balance){
+
+alert("Insufficient Balance");
+
+return;
+
+}
+
+balance = balance - totalDeduct;
+
+localStorage.setItem("wallet", balance);
+
+document.getElementById("balance").innerText =
+"₹" + balance.toFixed(2);
+
+alert(
+"Withdrawal Successful\n\n" +
+"Withdrawal Amount: ₹" + amount.toFixed(2) +
+"\nCharge: ₹" + charge.toFixed(2) +
+"\nTotal Deducted: ₹" + totalDeduct.toFixed(2)
+);
 
 }
 
