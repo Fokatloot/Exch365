@@ -1,32 +1,172 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Dashboard</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EXCH365 Premium Plans</title>
 
 <style>
 
 body{
 margin:0;
+padding:20px;
 font-family:Arial;
-background:#0f172a;
+background:linear-gradient(135deg,#0f172a,#2563eb);
 color:white;
-display:flex;
-justify-content:center;
-align-items:center;
-height:100vh;
 }
 
 h1{
-font-size:40px;
+text-align:center;
+margin-bottom:25px;
+font-size:35px;
+}
+
+.plan-box{
+background:#1e293b;
+border-radius:20px;
+overflow:hidden;
+margin-bottom:25px;
+box-shadow:0 0 15px rgba(0,0,0,0.4);
+}
+
+.plan-box img{
+width:100%;
+height:220px;
+object-fit:cover;
+}
+
+.content{
+padding:20px;
+}
+
+.plan-box h2{
+margin:0;
+color:#38bdf8;
+}
+
+.price{
+font-size:30px;
+margin:10px 0;
+font-weight:bold;
+}
+
+button{
+width:100%;
+padding:14px;
+border:none;
+border-radius:12px;
+background:#2563eb;
+color:white;
+font-size:18px;
+cursor:pointer;
+margin-top:10px;
+}
+
+button:hover{
+background:#1d4ed8;
+}
+
+.qr-box{
+background:white;
+padding:15px;
+border-radius:20px;
+margin-top:15px;
+text-align:center;
+}
+
+.qr-box img{
+width:100%;
+border-radius:15px;
+}
+
+.upi{
+color:black;
+font-weight:bold;
+margin-top:10px;
+font-size:18px;
 }
 
 </style>
-
 </head>
 
 <body>
 
-<h1>Welcome To EXCH365 🚀</h1>
+<h1>EXCH365 Premium Plans</h1>
+
+<div id="plans"></div>
+
+<script>
+
+let images = [
+
+"https://images.unsplash.com/photo-1520607162513-77705c0f0d4a",
+
+"https://images.unsplash.com/photo-1518546305927-5a555bb7020d",
+
+"https://images.unsplash.com/photo-1506744038136-46273834b3fb",
+
+"https://images.unsplash.com/photo-1494526585095-c41746248156",
+
+"https://images.unsplash.com/photo-1500530855697-b586d89ba3ee"
+
+];
+
+let plansDiv = document.getElementById("plans");
+
+for(let i = 1; i <= 20; i++){
+
+let amount = i * 500;
+
+let profit = i * 50;
+
+let randomImage = images[i % images.length];
+
+plansDiv.innerHTML += `
+
+<div class="plan-box">
+
+<img src="${randomImage}" alt="plan image">
+
+<div class="content">
+
+<h2>Plan ${i}</h2>
+
+<div class="price">₹${amount}</div>
+
+<p>Daily Profit ₹${profit}</p>
+
+<button onclick="buyPlan(${amount})">
+Buy Now
+</button>
+
+<div class="qr-box">
+
+<img src="scanner.jpg" alt="QR Code">
+
+<div class="upi">
+UPI ID: 7489731836@mbk
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+`;
+
+}
+
+function buyPlan(amount){
+
+let upi =
+`upi://pay?pa=7489731836@mbk&pn=EXCH365&am=${amount}&cu=INR`;
+
+window.location.href = upi;
+
+}
+
+</script>
 
 </body>
 </html>
