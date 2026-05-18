@@ -1,13 +1,29 @@
 function loginUser() {
 
-  alert("Login Successful");
+let mobile = document.getElementById("mobile").value;
+let password = document.getElementById("password").value;
 
-  window.location.href = "dashboard.html";
+if(mobile === "" || password === ""){
+alert("Please Fill All Details");
+return;
+}
+
+alert("Login Successful");
+
+window.location.href = "dashboard.html";
 }
 
 function registerUser() {
 
-  alert("Registration Successful");
+let mobile = document.getElementById("mobile").value;
+let password = document.getElementById("password").value;
 
-  window.location.href = "dashboard.html";
+if(mobile === "" || password === ""){
+alert("Please Fill All Details");
+return;
+}
+
+alert("Registration Successful");
+
+window.location.href = "dashboard.html";
 }
