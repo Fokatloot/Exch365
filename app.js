@@ -31,8 +31,9 @@ alert("Login Successful");
 document.getElementById("loginScreen").classList.remove("active");
 
 document.getElementById("homeScreen").classList.add("active");
-
-<button onclick="openDeposit()">Deposit</buttonfunction openDeposit(){
+window.location.href = "Dashboard.html";
+  
+ openDeposit(){
 
 document.getElementById("depositPopup").style.display="flex";
 
