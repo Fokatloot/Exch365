@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>EXCH365</title>
+<title>EXCH365 OTP Login</title>
 
 <style>
 
@@ -55,10 +55,6 @@ font-size:18px;
 cursor:pointer;
 }
 
-.register{
-background:#16a34a;
-}
-
 </style>
 </head>
 
@@ -68,14 +64,20 @@ background:#16a34a;
 
 <h1>EXCH365</h1>
 
-<input type="email" id="email" placeholder="Email">
+<input type="tel" id="phone"
+placeholder="+91XXXXXXXXXX">
 
-<input type="password" id="password" placeholder="Password">
+<div id="recaptcha-container"></div>
 
-<button onclick="loginUser()">Login</button>
+<button onclick="sendOTP()">
+Send OTP
+</button>
 
-<button class="register" onclick="registerUser()">
-Register
+<input type="text" id="otp"
+placeholder="Enter OTP">
+
+<button onclick="verifyOTP()">
+Verify OTP
 </button>
 
 </div>
@@ -87,8 +89,8 @@ import { initializeApp } from
 
 import {
 getAuth,
-createUserWithEmailAndPassword,
-signInWithEmailAndPassword
+RecaptchaVerifier,
+signInWithPhoneNumber
 } from
 "https://www.gstatic.com/firebasejs/12.7.0/firebase-auth.js";
 
@@ -119,23 +121,36 @@ const app = initializeApp(firebaseConfig);
 
 const auth = getAuth(app);
 
-window.registerUser = function(){
+window.recaptchaVerifier =
+new RecaptchaVerifier(
+auth,
+"recaptcha-container",
+{
+size:"normal"
+}
+);
 
-let email =
-document.getElementById("email").value;
+window.sendOTP = function(){
 
-let password =
-document.getElementById("password").value;
+let phone =
+document.getElementById("phone").value;
 
-createUserWithEmailAndPassword(auth,email,password)
+signInWithPhoneNumber(
+auth,
+phone,
+window.recaptchaVerifier
+)
 
-.then(() => {
+.then((confirmationResult)=>{
 
-alert("Signup Successful");
+window.confirmationResult =
+confirmationResult;
+
+alert("OTP Sent Successfully");
 
 })
 
-.catch((error) => {
+.catch((error)=>{
 
 alert(error.message);
 
@@ -143,27 +158,25 @@ alert(error.message);
 
 }
 
-window.loginUser = function(){
+window.verifyOTP = function(){
 
-let email =
-document.getElementById("email").value;
+let otp =
+document.getElementById("otp").value;
 
-let password =
-document.getElementById("password").value;
+confirmationResult.confirm(otp)
 
-signInWithEmailAndPassword(auth,email,password)
-
-.then(() => {
+.then(()=>{
 
 alert("Login Successful");
 
-window.location.href = "dashboard.html";
+window.location.href =
+"dashboard.html";
 
 })
 
-.catch((error) => {
+.catch(()=>{
 
-alert(error.message);
+alert("Invalid OTP");
 
 });
 
