@@ -1,116 +1,26 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Exch365</title>
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<style>
-
-body{
-background:#0f172a;
-font-family:Arial;
-display:flex;
-justify-content:center;
-align-items:center;
-height:100vh;
-margin:0;
-}
-
-.box{
-background:#1e293b;
-padding:30px;
-border-radius:15px;
-width:320px;
-}
-
-h1{
-color:white;
-text-align:center;
-}
-
-input{
-width:100%;
-padding:12px;
-margin-top:10px;
-border:none;
-border-radius:10px;
-background:#334155;
-color:white;
-}
-
-button{
-width:100%;
-padding:12px;
-margin-top:15px;
-border:none;
-border-radius:10px;
-background:#2563eb;
-color:white;
-font-size:16px;
-}
-
-</style>
-
+  <title>Login</title>
 </head>
-
 <body>
 
-<div class="box">
+<h2>Login</h2>
 
-<h1>Exch365</h1>
+<input type="text" placeholder="Username"><br><br>
 
-<input type="email" id="email" placeholder="Email">
+<input type="password" placeholder="Password"><br><br>
 
-<input type="password" id="password" placeholder="Password">
+<button onclick="loginUser()">Login</button>
 
-<button onclick="register()">Register</button>
+<br><br>
 
-<button onclick="login()">Login</button>
+<button onclick="registerUser()">Register</button>
 
-</div>
+<script src="app.js"></script>
 
-<script type="module">
-
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-
-import {
-getAuth,
-createUserWithEmailAndPassword,
-signInWithEmailAndPassword
-}
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
-const firebaseConfig = {
-apiKey: "AIzaSyAktq4I9G4zW5lqZ9lGNVh3PkRjvWWlx_w",
-authDomain: "exch365-e2535.firebaseapp.com",
-projectId: "exch365-e2535",
-storageBucket: "exch365-e2535.firebasestorage.app",
-messagingSenderId: "730989026832",
-appId: "1:730989026832:web:26d83555e7686ed0f6b495"
-};
-
-const app = initializeApp(firebaseConfig);
-
-const auth = getAuth(app);
-
-window.register = async function(){
-
-const email = document.getElementById("email").value;
-
-const password = document.getElementById("password").value;
-
-try{
-
-await createUserWithEmailAndPassword(auth,email,password);
-
-alert("Account Created");
-
-}catch(error){
-
-alert(error.message);
-
-}
+</body>
+</html>}
 
 }
 
