@@ -1,54 +1,27 @@
 function showRegister(){
 
-document.getElementById("loginScreen").classList.remove("active");
+  document.getElementById("loginScreen").classList.add("hidden");
 
-document.getElementById("registerScreen").classList.add("active");
-
+  document.getElementById("registerScreen").classList.remove("hidden");
 }
 
 function showLogin(){
 
-document.getElementById("registerScreen").classList.remove("active");
+  document.getElementById("registerScreen").classList.add("hidden");
 
-document.getElementById("loginScreen").classList.add("active");
-
+  document.getElementById("loginScreen").classList.remove("hidden");
 }
 
 function registerUser(){
 
-alert("Registration Successful");
+  alert("Registration Successful");
 
-document.getElementById("registerScreen").classList.remove("active");
-
-document.getElementById("homeScreen").classList.add("active");
-
+  window.location.href = "Dashboard.html";
 }
 
 function loginUser(){
 
-alert("Login Successful");
+  alert("Login Successful");
 
-document.getElementById("loginScreen").classList.remove("active");
-
-document.getElementById("homeScreen").classList.add("active");
-window.location.href = "Dashboard.html";
-  
- openDeposit(){
-
-document.getElementById("depositPopup").style.display="flex";
-
-}
-
-function closeDeposit(){
-
-document.getElementById("depositPopup").style.display="none";
-
-}
-
-function submitDeposit(){
-
-alert("Deposit Request Submitted");
-
-closeDeposit();
-
+  window.location.href = "Dashboard.html";
 }
