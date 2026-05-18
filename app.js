@@ -1,25 +1,23 @@
-function showRegister(){
+function showRegister() {
 
-  document.getElementById("loginScreen").classList.add("hidden");
-
-  document.getElementById("registerScreen").classList.remove("hidden");
+  document.getElementById("loginScreen").style.display = "none";
+  document.getElementById("registerScreen").style.display = "block";
 }
 
-function showLogin(){
+function showLogin() {
 
-  document.getElementById("registerScreen").classList.add("hidden");
-
-  document.getElementById("loginScreen").classList.remove("hidden");
+  document.getElementById("registerScreen").style.display = "none";
+  document.getElementById("loginScreen").style.display = "block";
 }
 
-function registerUser(){
+function registerUser() {
 
   alert("Registration Successful");
 
   window.location.href = "Dashboard.html";
 }
 
-function loginUser(){
+function loginUser() {
 
   alert("Login Successful");
 
